@@ -76,3 +76,21 @@
 .bootstrap-duallistbox-container.moveonselect .removeall {
     width: 100%;
 }
+
+.bs2centered .move,
+.bs2centered .remove {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.bs2centered .moveall,
+.bs2centered .removeall {
+    width: 100%;
+}
+
+.bs2unsortable .moveup,
+.bs2unsortable .movedown
+{
+    display: none;
+}
+

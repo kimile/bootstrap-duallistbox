@@ -68,22 +68,40 @@
                 filtertextclear         : 'show all',
                 nonselectedlistlabel    : false,            // 'string', false
                 selectedlistlabel       : false,            // 'string', false
-                filteronvalues          : false             // filter by selector's values, boolean
+                filteronvalues          : false,            // filter by selector's values, boolean
+                buttonscentered         : false,            // place buttons between selects
+                allowsort               : false             // Add buttons to sort select values - not available if settings.moveonselect=true
+
             }, options);
 
             var container;
 
+            // can only use this option if moveonselect is inactive
+            settings.allowsort = settings.allowsort && !settings.moveonselect;
+
             if (settings.bootstrap2compatible) {
-                container = $('<div class="row-fluid bootstrap-duallistbox-container bs2compatible"><div class="span6 box1"><span class="info-container"><span class="info"></span><button type="button" class="btn btn-mini clear1 pull-right">' + settings.filtertextclear + '</button></span><input placeholder="' + settings.filterplaceholder + '" class="filter" type="text"><div class="btn-group buttons"><button type="button" class="btn moveall" title="Move all"><i class="icon-arrow-right"></i><i class="icon-arrow-right"></i></button><button type="button" class="btn move" title="Move selected"><i class="icon-arrow-right"></i></button></div><select multiple="multiple" data-duallistbox_generated="true"></select></div><div class="span6 box2"><span class="info-container"><span class="info"></span><button type="button" class="btn btn-mini clear2 pull-right">' + settings.filtertextclear + '</button></span><input placeholder="' + settings.filterplaceholder + '" class="filter" type="text"><div class="btn-group buttons"><button type="button" class="btn remove" title="Remove selected"><i class="icon-arrow-left"></i></button><button type="button" class="btn removeall" title="Remove all"><i class="icon-arrow-left"></i><i class="icon-arrow-left"></i></button></div><select multiple="multiple" data-duallistbox_generated="true"></select></div></div>').insertBefore($this);
+                if (settings.buttonscentered) {
+                    container = $('<div class="bootstrap-duallistbox-container bs2compatible bs2centered"> <div class="row-fluid"> <div class="span5 box1 header"> <span class="info-container"> <span class="info"></span> <button type="button" class="btn btn-mini clear1 pull-right">' + settings.filtertextclear + '</button> <input placeholder="' + settings.filterplaceholder + '" class="filter" type="text"> </span> </div> <div class="span1">&nbsp;</div> <div class="span5 box2 header"> <span class="info-container"> <span class="info"></span> <button type="button" class="btn btn-mini clear2 pull-right">' + settings.filtertextclear + '</button> <input placeholder="' + settings.filterplaceholder + '" class="filter" type="text"> </span> </div> <div class="span1">&nbsp;</div> </div> <div class="row-fluid"> <div class="span5 box1"> <select multiple="multiple" data-duallistbox_generated="true"></select> </div> <div class="span1"> <div class="btn-group-vertical buttons"> <button type="button" class="btn moveall" title="Move all"> <i class="icon-forward"></i> </button> <button type="button" class="btn move" title="Move selected"> <i class="icon-arrow-right"></i> </button> <button type="button" class="btn remove" title="Remove selected"><i class="icon-arrow-left"></i></button> <button type="button" class="btn removeall" title="Remove all"> <i class="icon-backward"></i> </button> </div> </div> <div class="span5 box2"> <select multiple="multiple" data-duallistbox_generated="true"></select> </div> <div class="span1"> <div clasS="btn-group-vertical buttons"> <button type="button" class="btn moveup" title="Move up"> <i class="icon-arrow-up"></i> </button> <button type="button" class="btn movedown" title="Move down"> <i class="icon-arrow-down"></i> </button> </div> </div> </div> </div>').insertBefore($this);
+                } else {
+                    container = $('<div class="row-fluid bootstrap-duallistbox-container bs2compatible"><div class="span6 box1"><span class="info-container"><span class="info"></span><button type="button" class="btn btn-mini clear1 pull-right">' + settings.filtertextclear + '</button></span><input placeholder="' + settings.filterplaceholder + '" class="filter" type="text"><div class="btn-group buttons"><button type="button" class="btn moveall" title="Move all"><i class="icon-arrow-right"></i><i class="icon-arrow-right"></i></button><button type="button" class="btn move" title="Move selected"><i class="icon-arrow-right"></i></button></div><select multiple="multiple" data-duallistbox_generated="true"></select></div><div class="span6 box2"><span class="info-container"><span class="info"></span><button type="button" class="btn btn-mini clear2 pull-right">' + settings.filtertextclear + '</button></span><input placeholder="' + settings.filterplaceholder + '" class="filter" type="text"><div class="btn-group buttons"><button type="button" class="btn remove" title="Remove selected"><i class="icon-arrow-left"></i></button><button type="button" class="btn removeall" title="Remove all"><i class="icon-arrow-left"></i><i class="icon-arrow-left"></i></button></div><select multiple="multiple" data-duallistbox_generated="true"></select></div></div>').insertBefore($this);
+                }
             }
             else {
-                container = $('<div class="row bootstrap-duallistbox-container"><div class="col-md-6 box1"><span class="info-container"><span class="info"></span><button type="button" class="btn btn-default btn-xs clear1 pull-right">' + settings.filtertextclear + '</button></span><input placeholder="' + settings.filterplaceholder + '" class="filter form-control" type="text"><div class="btn-group buttons"><button type="button" class="btn btn-default moveall" title="Move all"><i class="glyphicon glyphicon-arrow-right"></i><i class="glyphicon glyphicon-arrow-right"></i></button><button type="button" class="btn btn-default move" title="Move selected"><i class="glyphicon glyphicon-arrow-right"></i></button></div><select multiple="multiple" class="form-control" data-duallistbox_generated="true"></select></div><div class="col-md-6 box2"><span class="info-container"><span class="info"></span><button type="button" class="btn btn-default btn-xs clear2 pull-right">' + settings.filtertextclear + '</button></span><input placeholder="' + settings.filterplaceholder + '" class="filter form-control" type="text"><div class="btn-group buttons"><button type="button" class="btn btn-default remove" title="Remove selected"><i class="glyphicon glyphicon-arrow-left"></i></button><button type="button" class="btn btn-default removeall" title="Remove all"><i class="glyphicon glyphicon-arrow-left"></i><i class="glyphicon glyphicon-arrow-left"></i></button></div><select multiple="multiple" class="form-control" data-duallistbox_generated="true"></select></div></div>').insertBefore($this);
+                if (settings.buttonscentered) {
+                    container = $('<div class="bootstrap-duallistbox-container bs2compatible bs2centered "> <div class="row-fluid"> <div class="col-md-5 box1 header"> <span class="info-container"> <span class="info"></span> <button type="button" class="btn btn-default btn-xs clear1 pull-right">' + settings.filtertextclear + '</button> <input placeholder="' + settings.filterplaceholder + '" class="filter" type="text"> </span> </div> <div class="col-md-1">&nbsp;</div> <div class="col-md-5 box2 header"> <span class="info-container"> <span class="info"></span> <button type="button" class="btn btn-default btn-xs clear2 pull-right">' + settings.filtertextclear + '</button> <input placeholder="' + settings.filterplaceholder + '" class="filter" type="text"> </span> </div> <div class="col-md-1">&nbsp;</div> </div> <div class="row-fluid"> <div class="col-md-5 box1"> <select multiple="multiple" data-duallistbox_generated="true"></select> </div> <div class="col-md-1"> <div class="btn-group-vertical buttons"> <button type="button" class="btn btn-default moveall" title="Move all"> <i class="glyphicon glyphicon-forward"></i> </button> <button type="button" class="btn btn-default move" title="Move selected"> <i class="glyphicon glyphicon-arrow-right"></i> </button> <button type="button" class="btn btn-default remove" title="Remove selected"> <i class="glyphicon glyphicon-arrow-left"></i> </button> <button type="button" class="btn btn-default removeall" title="Remove all"> <i class="glyphicon glyphicon-backward"></i> </button> </div> </div> <div class="col-md-5 box2"> <select multiple="multiple" data-duallistbox_generated="true"></select> </div> <div class="col-md-1"> <div clasS="btn-group-vertical buttons"> <button type="button" class="btn btn-default moveup" title="Move up"> <i class="glyphicon glyphicon-arrow-up"></i> </button> <button type="button" class="btn btn-default movedown" title="Move down"> <i class="glyphicon glyphicon-arrow-down"></i> </button> </div> </div></div></div>').insertBefore($this);
+                } else {
+                    container = $('<div class="row bootstrap-duallistbox-container"><div class="col-md-6 box1"><span class="info-container"><span class="info"></span><button type="button" class="btn btn-default btn-xs clear1 pull-right">' + settings.filtertextclear + '</button></span><input placeholder="' + settings.filterplaceholder + '" class="filter form-control" type="text"><div class="btn-group buttons"><button type="button" class="btn btn-default moveall" title="Move all"><i class="glyphicon glyphicon-arrow-right"></i><i class="glyphicon glyphicon-arrow-right"></i></button><button type="button" class="btn btn-default move" title="Move selected"><i class="glyphicon glyphicon-arrow-right"></i></button></div><select multiple="multiple" class="form-control" data-duallistbox_generated="true"></select></div><div class="col-md-6 box2"><span class="info-container"><span class="info"></span><button type="button" class="btn btn-default btn-xs clear2 pull-right">' + settings.filtertextclear + '</button></span><input placeholder="' + settings.filterplaceholder + '" class="filter form-control" type="text"><div class="btn-group buttons"><button type="button" class="btn btn-default remove" title="Remove selected"><i class="glyphicon glyphicon-arrow-left"></i></button><button type="button" class="btn btn-default removeall" title="Remove all"><i class="glyphicon glyphicon-arrow-left"></i><i class="glyphicon glyphicon-arrow-left"></i></button></div><select multiple="multiple" class="form-control" data-duallistbox_generated="true"></select></div></div>').insertBefore($this);
+                }
+            }
+
+            if (!settings.allowsort) {
+                container.addClass('bs2unsortable');
             }
 
             var elements = {
                     originalselect: $this,
-                    box1: $('.box1', container),
-                    box2: $('.box2', container),
+                    box1: settings.buttonscentered ? $('.box1.header', container) : $('.box1', container),
+                    box2: settings.buttonscentered? $('.box2.header', container) : $('.box2', container),
                     filterinput1: $('.box1 .filter', container),
                     filterinput2: $('.box2 .filter', container),
                     filter1clear: $('.box1 .clear1', container),
@@ -92,16 +110,18 @@
                     info2: $('.box2 .info', container),
                     select1: $('.box1 select', container),
                     select2: $('.box2 select', container),
-                    movebutton: $('.box1 .move', container),
-                    removebutton: $('.box2 .remove', container),
-                    moveallbutton: $('.box1 .moveall', container),
-                    removeallbutton: $('.box2 .removeall', container),
+                    movebutton: $('.move', container),
+                    removebutton: $('.remove', container),
+                    moveallbutton: $('.moveall', container),
+                    removeallbutton: $('.removeall', container),
+                    moveupbutton: $('.moveup', container),
+                    movedownbutton: $('.movedown', container),
                     form: $($('.box1 .filter', container)[0].form)
                 },
                 i = 0,
                 selectedelements = 0,
-                // Selections are invisible on android if the containing select is styled with CSS
-                // http://code.google.com/p/android/issues/detail?id=16922
+            // Selections are invisible on android if the containing select is styled with CSS
+            // http://code.google.com/p/android/issues/detail?id=16922
                 isbuggyandroid = /android/i.test(navigator.userAgent.toLowerCase());
 
             init();
@@ -318,6 +338,14 @@
                     removeall();
                 });
 
+                elements.moveupbutton.on('click', function () {
+                    moveup();
+                });
+
+                elements.movedownbutton.on('click', function () {
+                    movedown();
+                });
+
                 elements.filterinput1.on('change keyup', function() {
                     filter1();
                 });
@@ -524,6 +552,28 @@
                 });
 
                 refreshselects();
+                triggerchangeevent();
+            }
+
+            function moveup()
+            {
+                elements.select2.find('option:selected').each(function (index, item) {
+                    var $item = $(item), $prev = $item.prev();
+                    if ($prev.length) {
+                        $item.detach().insertBefore($prev);
+                    }
+                });
+                triggerchangeevent();
+            }
+
+            function movedown()
+            {
+                elements.select2.find('option:selected').each(function (index, item) {
+                    var $item = $(item), $next = $item.next();
+                    if ($next.length) {
+                        $item.detach().insertAfter($next);
+                    }
+                });
                 triggerchangeevent();
             }
 
